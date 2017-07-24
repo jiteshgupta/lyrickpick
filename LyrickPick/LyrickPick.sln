@@ -5,7 +5,7 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LyrickPick", "LyrickPick\LyrickPick.csproj", "{EB620A42-B076-442C-9E5F-32681A1AF63B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestProject1", "UnitTestProject1\UnitTestProject1.csproj", "{3499DD93-BD41-47D8-80D8-E827C905505A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LyrickPickUnitTests", "UnitTestProject1\LyrickPickUnitTests.csproj", "{3499DD93-BD41-47D8-80D8-E827C905505A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
