@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Newtonsoft.Json.Linq;
 using System.Linq;
 using System.Web;
 
@@ -18,6 +19,7 @@ namespace LyrickPick.Processors
         {
             List<string[]> items = new List<string[]>();
 
+            var jsonObject = JObject.Parse(jsonData);
 
             return items;
         }
