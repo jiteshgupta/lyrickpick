@@ -1,32 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
-using Newtonsoft.Json.Linq;
-using System.Linq;
-using System.Web;
+using Newtonsoft.Json;
 
 namespace LyrickPick.Processors
 {
-    public class DataParser
-    {
-        private string jsonData = String.Empty;
+	public class DataParser
+	{
+		public List<Song> GetSongList(string jsonData)
+		{
+			List<Song> items = new List<Song>();
 
-        public DataParser(string jsonData)
-        {
-            this.jsonData = jsonData;
-        }
+			dynamic dynObj = JsonConvert.DeserializeObject(jsonData);
 
-        public List<string[]> parseData(string jsonData, string[] inputFields)
-        {
-            List<string[]> items = new List<string[]>();
+			foreach (var data in dynObj.tracks.track)
+			{
+				string songName = data.name;
+				string artistName = data.artist.name;
+				Song song = new Song(artistName, songName);
+				items.Add(song);
+			}
 
-            var jsonObject = JObject.Parse(jsonData);
-
-            return items;
-        }
-
-        public List<string[]> parseData(string[] inputFields)
-        {
-            return parseData(jsonData, inputFields);
-        }
-    }
+			return items;
+		}
+	}
 }
