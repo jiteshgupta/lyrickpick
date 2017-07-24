@@ -1,4 +1,5 @@
 ﻿using System;
+using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,24 +9,34 @@ namespace LyrickPick.Processors
     public class LyricProcessor
     {
         //takes in json or string of one song's lyrics
-        //returns as list of each line
-        public static string[] SpliceSong (string SongLyrics)
+        //returns array of strings of each line
+        public static string[] SpliceSong (string LyricsJson)
         {
             //array list of every line as a separate item
-            string[] lines = new string[SongLyrics.Length];
+            var obj = JObject.Parse(LyricsJson);
+            var lyricsBody = (string)obj["body"]["lyrics"]["lyrics_body"];
+            string[] lines = lyricsBody.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.None);
             return lines;
 
         }
-        //takes in list of each line
+
+
+        //takes in song lyrics broken into array of strings of each line
+        //returns list of lines and count of each
         public static List<Tuple<string, int>> CountLines (string[] SongLyrics)
         {
             List<Tuple<string, int>> count = new List<Tuple<string, int>>();
             return count;
         }
 
-        public static string selectLine (Array LyricList, Array selectedIndices)
+        public static string selectLine (string[] lines, string[] selectedLines)
         {
-            return "this is the line";
+            string line = selectedLines[0];
+            while (selectedLines.Contains(line))
+            {
+                line = lines[new Random().Next(0,lines.Length)];
+            }
+            return line;
         }
     }
 }
