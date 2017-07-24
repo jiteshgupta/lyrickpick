@@ -30,7 +30,7 @@ namespace LyrickPick.Processors
             List<String> lines = LyricProcessor.SpliceSong(json);
             List<String> selectedLines = new List<String>();
             string question = LyricProcessor.selectLine(lines, selectedLines);
-            
+
         }
         public Song selectSong()
         {
