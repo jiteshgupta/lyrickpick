@@ -1,1 +1,1 @@
-# lyricpick
+# lyrickpick
