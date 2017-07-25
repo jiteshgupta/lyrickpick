@@ -11,10 +11,10 @@ namespace LyrickPick.Processors
 		private List<Song> selectedSongs;
 		private FetchLyrics fl;
 		private LyricProcessor lp;
-        private DataParser dp;
-        private FetchSongs fs;
+		private DataParser dp;
+		private FetchSongs fs;
 		private Random random = new Random();
-        private int pageNum = 1;
+		private int pageNum = 1;
 
 		private Context context;
 		private int totalScore = 0;
@@ -35,21 +35,21 @@ namespace LyrickPick.Processors
 			selectedSongs = new List<Song>();
 
 			fl = new FetchLyrics();
-            fs = new FetchSongs();
-            dp = new DataParser();
-            lp = new LyricProcessor();
-            //populate the songs list
-            songs = dp.GetSongList(fs.getSongsData());
+			fs = new FetchSongs();
+			dp = new DataParser();
+			lp = new LyricProcessor();
+			//populate the songs list
+			songs = dp.GetSongList(fs.getSongsData());
 
-        }
-        /*stretch goal
+		}
+		/*stretch goal
 		public Quiz(string Genre)
 		{
 			
 		}
 		*/
 
-        public string Question()
+		public string Question()
 		{
 			//create a new question context
 			context = new Context();
@@ -76,21 +76,21 @@ namespace LyrickPick.Processors
 		public Song selectSong()
 		{
 			Song song = songs[random.Next(0, songs.Count)];
-            selectedSongs.Add(song);
-            songs.Remove(song);
-            if (songs.Count == 0)
-            {
-                incrementPage();
-                //populate the songs list
-                songs = dp.GetSongList(fs.GetSongsMusicXmatch(pageNum));
-            }
+			selectedSongs.Add(song);
+			songs.Remove(song);
+			if (songs.Count == 0)
+			{
+				incrementPage();
+				//populate the songs list
+				songs = dp.GetSongList(fs.GetSongsMusicXmatch(pageNum));
+			}
 			return song;
 		}
 
-        public void incrementPage()
-        {
-            pageNum++;
-        }
+		public void incrementPage()
+		{
+			pageNum++;
+		}
 
 		public string processHint()
 		{
