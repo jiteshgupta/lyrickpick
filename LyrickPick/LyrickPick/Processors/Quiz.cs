@@ -11,7 +11,10 @@ namespace LyrickPick.Processors
 		private List<Song> selectedSongs;
 		private FetchLyrics fl;
 		private LyricProcessor lp;
+        private DataParser dp;
+        private FetchSongs fs;
 		private Random random = new Random();
+        private int pageNum = 1;
 
 		private Context context;
 		private int totalScore = 0;
@@ -28,52 +31,31 @@ namespace LyrickPick.Processors
 
 		public Quiz()
 		{
-			FetchSongs fs = new FetchSongs();
-			DataParser dp = new DataParser();
-
-			//populate the songs list
-			songs = dp.GetSongList(fs.getSongsData());
-
+			
 			selectedSongs = new List<Song>();
 
 			fl = new FetchLyrics();
-			lp = new LyricProcessor();
-		}
-		/*stretch goal
+            fs = new FetchSongs();
+            dp = new DataParser();
+            lp = new LyricProcessor();
+            //populate the songs list
+            songs = dp.GetSongList(fs.getSongsData());
+
+        }
+        /*stretch goal
 		public Quiz(string Genre)
 		{
 			
 		}
 		*/
 
-		public string QuestionLastFM()
-		{
-			//select a song
-			Song currentSong = selectSong();
-			selectedSongs.Add(currentSong);
-
-			currentSong.setMMID(fl.isMatch(currentSong));
-			while (currentSong.getMMID() < 0)
-			{
-				currentSong = selectSong();
-				selectedSongs.Add(currentSong);
-				currentSong.setMMID(fl.isMatch(currentSong));
-			}
-			string json = fl.GetLyrics(currentSong);
-			string[] lines = lp.SpliceSong(json);
-			List<String> selectedLines = new List<String>();
-			string question = lp.selectLine(lines, selectedLines);
-			return question;
-
-		}
-		public string Question()
+        public string Question()
 		{
 			//create a new question context
 			context = new Context();
 
 			//select a song
 			Song currentSong = selectSong();
-			selectedSongs.Add(currentSong);
 			context.SetCurrentSong(currentSong);
 
 			//fetch lyrics
@@ -94,13 +76,21 @@ namespace LyrickPick.Processors
 		public Song selectSong()
 		{
 			Song song = songs[random.Next(0, songs.Count)];
-			while (selectedSongs.Contains(song))
-			{
-				song = songs[random.Next(0, songs.Count)];
-			}
-
+            selectedSongs.Add(song);
+            songs.Remove(song);
+            if (songs.Count == 0)
+            {
+                incrementPage();
+                //populate the songs list
+                songs = dp.GetSongList(fs.GetSongsMusicXmatch(pageNum));
+            }
 			return song;
 		}
+
+        public void incrementPage()
+        {
+            pageNum++;
+        }
 
 		public string processHint()
 		{

@@ -7,10 +7,10 @@ namespace LyrickPick.Processors
 {
 	public class FetchLyrics
 	{
-		private string lyricsData = String.Empty;
-		private static string musixmatchAPIkey = "8b7654870c8395335a30eb19039218f6";
-
-		public string GetLyricsData()
+        private static string musixmatchAPIkey = "8b7654870c8395335a30eb19039218f6";
+        private string lyricsData = String.Empty;
+		
+        public string GetLyricsData()
 		{
 			return lyricsData;
 		}
