@@ -5,70 +5,86 @@ using System.Web;
 
 namespace LyrickPick.Processors
 {
-    public class Quiz
-    {
-        static List<Song> songs;
-        static List<Song> selectedSongs;
-        static FetchLyrics fl;
-        static int score = 0;
-        static Random random = new Random();
+	public class Quiz
+	{
+		private List<Song> songs;
+		private List<Song> selectedSongs;
+		private FetchLyrics fl;
+		private LyricProcessor lp;
+		private int score = 0;
+		private Random random = new Random();
 
-        public Quiz()
-        {
-            FetchSongs fs = new FetchSongs();
-            DataParser dp = new DataParser();
-            selectedSongs = new List<Song>();
-            //selectedSongs.Add(new Song());
-            fl = new FetchLyrics();
-            songs = dp.GetSongList(fs.getSongsData());
-        }
-        /*stretch goal
-        public Quiz(string Genre)
-        {
-            
-        }
-        */
+		private Song currentSong;
+		private List<String> selectedLines;
 
-        public string QuestionLastFM()
-        {
-            //select a song
-            Song currentSong = selectSong();
-            selectedSongs.Add(currentSong);
-            currentSong.setMMID(fl.isMatch(currentSong));
-            while (currentSong.getMMID() < 0)
-            {
-                currentSong = selectSong();
-                selectedSongs.Add(currentSong);
-                currentSong.setMMID(fl.isMatch(currentSong));
-            }
-            string json = fl.GetLyrics(currentSong);
-            List<String> lines = LyricProcessor.SpliceSong(json);
-            List<String> selectedLines = new List<String>();
-            string question = LyricProcessor.selectLine(lines, selectedLines);
-            return question;
+		public Quiz()
+		{
+			FetchSongs fs = new FetchSongs();
+			DataParser dp = new DataParser();
 
-        }
-        public string Question()
-        {
-            //select a song
-            Song currentSong = selectSong();
-            selectedSongs.Add(currentSong);
-            string json = fl.GetLyrics(currentSong.getMMID());
-            List<String> lines = LyricProcessor.SpliceSong(json);
-            List<String> selectedLines = new List<String>();
-            string question = LyricProcessor.selectLine(lines, selectedLines);
-            return question;
+			//populate the songs list
+			songs = dp.GetSongList(fs.getSongsData());
 
-        }
-        public Song selectSong()
-        {
-            Song song = songs[random.Next(0, songs.Count)];
-            while (selectedSongs.Contains(song))
-            {
-                song = songs[random.Next(0, songs.Count)];
-            }
-            return song;
-        }
+			selectedSongs = new List<Song>();
 
-    }
+			fl = new FetchLyrics();
+			lp = new LyricProcessor();
+		}
+		/*stretch goal
+		public Quiz(string Genre)
+		{
+			
+		}
+		*/
+
+		public string QuestionLastFM()
+		{
+			//select a song
+			currentSong = selectSong();
+			selectedSongs.Add(currentSong);
+
+			currentSong.setMMID(fl.isMatch(currentSong));
+			while (currentSong.getMMID() < 0)
+			{
+				currentSong = selectSong();
+				selectedSongs.Add(currentSong);
+				currentSong.setMMID(fl.isMatch(currentSong));
+			}
+			string json = fl.GetLyrics(currentSong);
+			List<String> lines = LyricProcessor.SpliceSong(json);
+			List<String> selectedLines = new List<String>();
+			string question = lp.selectLine(lines, selectedLines);
+			return question;
+
+		}
+		public string Question()
+		{
+			//select a song
+			currentSong = selectSong();
+			selectedSongs.Add(currentSong);
+
+			//fetch lyrics
+			string json = fl.GetLyrics(currentSong.getMMID());
+
+			//splice song
+			List<String> lines = LyricProcessor.SpliceSong(json);
+			selectedLines = new List<String>();
+
+			//randomly select a line from the song
+			string question = lp.selectLine(lines, selectedLines);
+			selectedLines.Add(question);
+
+			return question;
+
+		}
+		public Song selectSong()
+		{
+			Song song = songs[random.Next(0, songs.Count)];
+			while (selectedSongs.Contains(song))
+			{
+				song = songs[random.Next(0, songs.Count)];
+			}
+			return song;
+		}
+	}
 }
