@@ -13,7 +13,9 @@ namespace LyrickPick.Processors
 
         public Quiz()
         {
-            //songs = fetchsongs
+            FetchSongs fs = new FetchSongs();
+            DataParser dp = new DataParser();
+            songs = dp.GetSongList(fs.getSongsData());
         }
         /*stretch goal
         public Quiz(string Genre)
