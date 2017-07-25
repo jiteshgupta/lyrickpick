@@ -10,6 +10,11 @@ namespace LyrickPick.Processors
         static string artist;
         static string title;
         static int musixmatchID;
+        public Song()
+        {
+            artist = "";
+            title = "";
+        }
         public Song(string artistName, string songTitle)
         {
             artist = artistName;

@@ -16,6 +16,8 @@ namespace LyrickPick.Processors
         {
             FetchSongs fs = new FetchSongs();
             DataParser dp = new DataParser();
+            selectedSongs = new List<Song>();
+            selectedSongs.Add(new Song());
             fl = new FetchLyrics();
             songs = dp.GetSongList(fs.getSongsData());
         }
