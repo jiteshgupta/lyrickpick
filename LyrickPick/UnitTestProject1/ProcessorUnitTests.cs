@@ -11,7 +11,9 @@ namespace LyrickPickUnitTests
         public void TestMethod1()
         {
             Quiz qz = new Quiz();
-
+            string question = qz.Question();
+            Console.WriteLine(question);
+            Assert.IsNotNull(question);
 
         }
     }

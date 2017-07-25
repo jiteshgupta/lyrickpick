@@ -26,7 +26,7 @@ namespace LyrickPick.Processors
         }
         */
 
-        public void Question()
+        public string Question()
         {
             //select a song
             Song currentSong = selectSong();
@@ -42,6 +42,7 @@ namespace LyrickPick.Processors
             List<String> lines = LyricProcessor.SpliceSong(json);
             List<String> selectedLines = new List<String>();
             string question = LyricProcessor.selectLine(lines, selectedLines);
+            return question;
 
         }
         public Song selectSong()
