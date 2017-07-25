@@ -21,23 +21,20 @@ namespace LyrickPickFunctionality
 
 				if (String.Equals("hint", userInput, StringComparison.OrdinalIgnoreCase))
 				{
-
+					string hint = qz.processHint();
+					Console.WriteLine(hint);
+					userInput = Console.ReadLine();
 				}
 
-                else if (String.Equals("hint", userInput, StringComparison.OrdinalIgnoreCase))
-                {
-
-                }
-
-                if (String.Equals(qz.GetCurrentSongTitle(), userInput, StringComparison.OrdinalIgnoreCase))
+				if (String.Equals(qz.GetCurrentContext().GetCurrentSongTitle(), userInput, StringComparison.OrdinalIgnoreCase))
 				{
 					Console.WriteLine("Correct!");
 				}
 				else
 				{
 					Console.WriteLine("Wrong!");
-					Console.WriteLine("Song:- " + qz.GetCurrentSongTitle());
-					Console.WriteLine("Artist:- " + qz.GetCurrentSongArtist());
+					Console.WriteLine("Song:- " + qz.GetCurrentContext().GetCurrentSongTitle());
+					Console.WriteLine("Artist:- " + qz.GetCurrentContext().GetCurrentSongArtist());
 				}
 			}
 		}

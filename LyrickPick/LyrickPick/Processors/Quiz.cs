@@ -13,19 +13,17 @@ namespace LyrickPick.Processors
 		private LyricProcessor lp;
 		private Random random = new Random();
 
-		private Song currentSong;
-		private List<String> selectedLines;
-
+		private Context context;
 		private int totalScore = 0;
 
-		public string GetCurrentSongTitle()
+		public Context GetCurrentContext()
 		{
-			return currentSong.getTitle();
+			return context;
 		}
 
-		public string GetCurrentSongArtist()
+		public LyricProcessor GetLyricProcessor()
 		{
-			return currentSong.getArtist();
+			return lp;
 		}
 
 		public Quiz()
@@ -51,7 +49,7 @@ namespace LyrickPick.Processors
 		public string QuestionLastFM()
 		{
 			//select a song
-			currentSong = selectSong();
+			Song currentSong = selectSong();
 			selectedSongs.Add(currentSong);
 
 			currentSong.setMMID(fl.isMatch(currentSong));
@@ -70,24 +68,29 @@ namespace LyrickPick.Processors
 		}
 		public string Question()
 		{
+			//create a new question context
+			context = new Context();
+
 			//select a song
-			currentSong = selectSong();
+			Song currentSong = selectSong();
 			selectedSongs.Add(currentSong);
+			context.SetCurrentSong(currentSong);
 
 			//fetch lyrics
 			string json = fl.GetLyrics(currentSong.getMMID());
 
 			//splice song
 			string[] lines = lp.SpliceSong(json);
-			selectedLines = new List<String>();
+			context.SetCurrentSongLines(lines);
 
 			//randomly select a line from the song
-			string question = lp.selectLine(lines, selectedLines);
-			selectedLines.Add(question);
+			string question = lp.selectLine(lines, new List<string>());
+			context.AddtoSelectedLines(question);
 
+			//ask question
 			return question;
-
 		}
+
 		public Song selectSong()
 		{
 			Song song = songs[random.Next(0, songs.Count)];
@@ -95,7 +98,25 @@ namespace LyrickPick.Processors
 			{
 				song = songs[random.Next(0, songs.Count)];
 			}
+
 			return song;
+		}
+
+		public string processHint()
+		{
+			string hint;
+			if (context.GetIsHintUsed())
+			{
+				hint = "Hint has already been used!!!";
+			}
+			else
+			{
+				context.SetIsHintUsed(true);
+				hint = lp.selectLine(context.GetCurrentSongLines(), context.GetSelectedLinesList());
+				context.AddtoSelectedLines(hint);
+			}
+
+			return hint;
 		}
 	}
 }
