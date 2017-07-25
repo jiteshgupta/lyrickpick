@@ -17,7 +17,7 @@ namespace LyrickPick.Processors
 
 		public string GetLyrics(int MMID)
 		{
-			string url = "http://api.musixmatch.com/ws/1.1/track.lyrics.get?track_id=" + MMID + "&apikey=" + musixmatchAPIkey;
+			string url = "http://api.musixmatch.com/ws/1.1/track.lyrics.get?commontrack_id=" + MMID + "&apikey=" + musixmatchAPIkey;
 			string lyricsData = FetchData.FetchDataFromURL(url);
 			return lyricsData;
 		}
@@ -35,7 +35,7 @@ namespace LyrickPick.Processors
 			var obj = JObject.Parse(lyricsData);
 			var returnCode = (string)obj["message"]["header"]["status_code"];
 			if (returnCode.Equals("200"))
-				return (int)obj["body"]["track"]["track_id"];
+				return (int)obj["body"]["track"]["commontrack_id"];
 			return -1;
 		}
 	}

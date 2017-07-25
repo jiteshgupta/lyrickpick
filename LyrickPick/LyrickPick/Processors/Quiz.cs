@@ -76,14 +76,14 @@ namespace LyrickPick.Processors
 		public Song selectSong()
 		{
 			Song song = songs[random.Next(0, songs.Count)];
-			selectedSongs.Add(song);
-			songs.Remove(song);
-			if (songs.Count == 0)
-			{
-				incrementPage();
-				//populate the songs list
-				songs = dp.GetSongList(fs.GetSongsMusicXmatch(pageNum));
-			}
+            selectedSongs.Add(song);
+            songs.Remove(song);
+            if (songs.Count == 0)
+            {
+                incrementPage();
+                //populate the songs list
+                songs = dp.GetSongList(fs.GetSongs(pageNum));
+            }
 			return song;
 		}
 

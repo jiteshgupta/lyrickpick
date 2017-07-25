@@ -17,7 +17,6 @@ namespace LyrickPick.Processors
 		public string[] SpliceSong (string lyricsJson)
 		{
 			//array list of every line as a separate item
-			var obj = JsonConvert.DeserializeObject(lyricsJson);
 			JObject j = JObject.Parse(lyricsJson);
 			string lyricsBody = (string)j.SelectToken("message.body.lyrics.lyrics_body");
 
