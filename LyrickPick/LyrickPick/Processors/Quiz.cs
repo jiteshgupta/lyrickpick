@@ -17,6 +17,16 @@ namespace LyrickPick.Processors
 		private Song currentSong;
 		private List<String> selectedLines;
 
+		public string GetCurrentSongTitle()
+		{
+			return currentSong.getTitle();
+		}
+
+		public string GetCurrentSongArtist()
+		{
+			return currentSong.getArtist();
+		}
+
 		public Quiz()
 		{
 			FetchSongs fs = new FetchSongs();
@@ -51,7 +61,7 @@ namespace LyrickPick.Processors
 				currentSong.setMMID(fl.isMatch(currentSong));
 			}
 			string json = fl.GetLyrics(currentSong);
-			List<String> lines = LyricProcessor.SpliceSong(json);
+			string[] lines = lp.SpliceSong(json);
 			List<String> selectedLines = new List<String>();
 			string question = lp.selectLine(lines, selectedLines);
 			return question;
@@ -67,7 +77,7 @@ namespace LyrickPick.Processors
 			string json = fl.GetLyrics(currentSong.getMMID());
 
 			//splice song
-			List<String> lines = LyricProcessor.SpliceSong(json);
+			string[] lines = lp.SpliceSong(json);
 			selectedLines = new List<String>();
 
 			//randomly select a line from the song

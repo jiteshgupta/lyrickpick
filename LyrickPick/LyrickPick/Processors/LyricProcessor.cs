@@ -13,14 +13,14 @@ namespace LyrickPick.Processors
 		//takes in json or string of one song's lyrics
 		//returns array of strings of each line
 
-		public static List<String> SpliceSong (string lyricsJson)
+		public string[] SpliceSong (string lyricsJson)
 		{
 			//array list of every line as a separate item
 			var obj = JsonConvert.DeserializeObject(lyricsJson);
 			JObject j = JObject.Parse(lyricsJson);
 			string lyricsBody = (string)j.SelectToken("message.body.lyrics.lyrics_body");
 
-			List<String> lines = lyricsBody.Split('\n').ToList();
+			string[] lines = lyricsBody.Split('\n').ToArray();
 			return lines;
 
 		}
@@ -32,13 +32,26 @@ namespace LyrickPick.Processors
 			return count;
 		}
 
-		public string selectLine (List<String> lines, List<String> selectedLines)
+		public string selectLine (string[] lines, List<String> selectedLines)
 		{
-			string line = lines[rand.Next(0, lines.Count)];
+			int randomLineNumber = rand.Next(0, lines.Length);
+
+			string line;
+			if (randomLineNumber == lines.Length - 1)
+			{
+				line = lines[randomLineNumber-1] + "\n" + lines[randomLineNumber];
+			}
+			else
+			{
+				line = lines[randomLineNumber] + "\n" + lines[randomLineNumber + 1];
+			}
+			
 			while (selectedLines.Contains(line))
 			{
-				line = lines[rand.Next(0,lines.Count)];
+				randomLineNumber = rand.Next(0, lines.Length);
+				line = lines[randomLineNumber];
 			}
+
 			return line;
 		}
 	}

@@ -22,13 +22,13 @@ namespace LyrickPick.Processors
 		public void GetSongsLastFM()
 		{
 			string url = "http://ws.audioscrobbler.com/2.0/?method=chart.gettoptracks&api_key=" + lastFMApiKey + "&format=" + dataFormat;
-			string songsData = FetchData.FetchDataFromURL(url);
+			songsData = FetchData.FetchDataFromURL(url);
 		}
 
 		public void GetSongsMusicXmatch()
 		{
 			string url = "http://api.musixmatch.com/ws/1.1/chart.tracks.get?page=1&page_size=50&country=us&f_has_lyrics=1&apikey=" + musicxmatchAPIkey;
-			string songsData = FetchData.FetchDataFromURL(url);
+			songsData = FetchData.FetchDataFromURL(url);
 		}
 	}
 }
