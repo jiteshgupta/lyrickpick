@@ -9,12 +9,14 @@ namespace LyrickPick.Processors
     {
         static List<Song> songs;
         static List<Song> selectedSongs;
+        static FetchLyrics fl;
         static int score = 0;
 
         public Quiz()
         {
             FetchSongs fs = new FetchSongs();
             DataParser dp = new DataParser();
+            fl = new FetchLyrics();
             songs = dp.GetSongList(fs.getSongsData());
         }
         /*stretch goal
@@ -28,7 +30,15 @@ namespace LyrickPick.Processors
         {
             //select a song
             Song currentSong = selectSong();
-            string json = ""; //=fetchlyrics
+            selectedSongs.Add(currentSong);
+            currentSong.setMMID(fl.isMatch(currentSong));
+            while (currentSong.getMMID() < 0)
+            {
+                currentSong = selectSong();
+                selectedSongs.Add(currentSong);
+                currentSong.setMMID(fl.isMatch(currentSong));
+            }
+            string json = fl.GetLyrics(currentSong);
             List<String> lines = LyricProcessor.SpliceSong(json);
             List<String> selectedLines = new List<String>();
             string question = LyricProcessor.selectLine(lines, selectedLines);

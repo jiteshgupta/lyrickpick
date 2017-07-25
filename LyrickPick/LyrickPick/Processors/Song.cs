@@ -23,11 +23,11 @@ namespace LyrickPick.Processors
         {
             return title;
         }
-        public string getMMID()
+        public int getMMID()
         {
             return musixmatchID;
         }
-        public void setTrackID(int trackID)
+        public void setMMID(int trackID)
         {
             musixmatchID = trackID;
         }
