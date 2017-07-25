@@ -46,6 +46,11 @@ namespace LyrickPick.Processors
 			selectedLines.Add(line);
 		}
 
+		public Song GetCurrentSong()
+		{
+			return currentSong;
+		}
+
 		public string GetCurrentSongTitle()
 		{
 			return currentSong.getTitle();
