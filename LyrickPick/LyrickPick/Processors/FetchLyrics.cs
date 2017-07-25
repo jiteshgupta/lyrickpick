@@ -37,7 +37,7 @@ namespace LyrickPick.Processors
             using (Stream stream = response.GetResponseStream())
             using (StreamReader reader = new StreamReader(stream))
             {
-                songsData = reader.ReadToEnd();
+                lyricsData = reader.ReadToEnd();
             }
         }
     }
