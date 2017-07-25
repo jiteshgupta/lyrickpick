@@ -5,11 +5,12 @@ using System.Web;
 
 namespace LyrickPick.Processors
 {
-	[Serializable]
-	public class Song
+    [Serializable]
+    public class Song
 	{
 		public string artist;
 		public string title;
+        public int musixmatchArtistID;
 		public int musixmatchID;
 
 		public Song()
@@ -29,7 +30,15 @@ namespace LyrickPick.Processors
 			musixmatchID = trackID;
 		}
 
-		public string getArtist()
+        public Song(string artistName, string songTitle, int trackID, int artistID)
+        {
+            artist = artistName;
+            title = songTitle;
+            musixmatchID = trackID;
+            musixmatchArtistID = artistID;
+        }
+
+        public string getArtist()
 		{
 			return artist;
 		}
@@ -44,7 +53,12 @@ namespace LyrickPick.Processors
 			return musixmatchID;
 		}
 
-		public void setMMID(int trackID)
+        public int getMMIDArtist()
+        {
+            return musixmatchArtistID;
+        }
+
+        public void setMMID(int trackID)
 		{
 			musixmatchID = trackID;
 		}
