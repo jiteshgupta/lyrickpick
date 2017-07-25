@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using LyrickPick.Processors;
 
 namespace LyrickPickUnitTests
 {
@@ -9,6 +10,9 @@ namespace LyrickPickUnitTests
         [TestMethod]
         public void TestMethod1()
         {
+            Quiz qz = new Quiz();
+
+
         }
     }
 }
