@@ -11,13 +11,14 @@ namespace LyrickPick.Processors
         static List<Song> selectedSongs;
         static FetchLyrics fl;
         static int score = 0;
+        static Random random = new Random();
 
         public Quiz()
         {
             FetchSongs fs = new FetchSongs();
             DataParser dp = new DataParser();
             selectedSongs = new List<Song>();
-            selectedSongs.Add(new Song());
+            //selectedSongs.Add(new Song());
             fl = new FetchLyrics();
             songs = dp.GetSongList(fs.getSongsData());
         }
@@ -49,10 +50,10 @@ namespace LyrickPick.Processors
         }
         public Song selectSong()
         {
-            Song song = selectedSongs[0];
+            Song song = songs[random.Next(0, songs.Count)];
             while (selectedSongs.Contains(song))
             {
-                song = songs[new Random().Next(0, songs.Count)];
+                song = songs[random.Next(0, songs.Count)];
             }
             return song;
         }
