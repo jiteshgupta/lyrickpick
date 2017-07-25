@@ -1,27 +1,36 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Web;
 
 namespace LyrickPick.Processors
 {
+	[Serializable]
 	public class Quiz
 	{
-		private List<Song> songs;
-		private List<Song> selectedSongs;
-		private FetchLyrics fl;
-		private LyricProcessor lp;
-		private DataParser dp;
-		private FetchSongs fs;
-		private Random random = new Random();
-		private int pageNum = 1;
+		public List<Song> songs;
+		public List<Song> selectedSongs;
+		public FetchLyrics fl;
+		public LyricProcessor lp;
+		public DataParser dp;
+		public FetchSongs fs;
+		public Random random = new Random();
+		public int pageNum = 1;
 
-		private Context context;
-		private int totalScore = 0;
+		public string foo = "Test";
+
+		public Context context;
+		public int totalScore = 0;
 
 		public Context GetCurrentContext()
 		{
 			return context;
+		}
+
+		public string GetFoo()
+		{
+			return foo;
 		}
 
 		public LyricProcessor GetLyricProcessor()
@@ -31,7 +40,6 @@ namespace LyrickPick.Processors
 
 		public Quiz()
 		{
-			
 			selectedSongs = new List<Song>();
 
 			fl = new FetchLyrics();
@@ -53,7 +61,7 @@ namespace LyrickPick.Processors
 		{
 			//create a new question context
 			context = new Context();
-
+			foo = "Fooo";
 			//select a song
 			Song currentSong = selectSong();
 			context.SetCurrentSong(currentSong);
@@ -76,14 +84,14 @@ namespace LyrickPick.Processors
 		public Song selectSong()
 		{
 			Song song = songs[random.Next(0, songs.Count)];
-            selectedSongs.Add(song);
-            songs.Remove(song);
-            if (songs.Count == 0)
-            {
-                incrementPage();
-                //populate the songs list
-                songs = dp.GetSongList(fs.GetSongs(pageNum));
-            }
+			selectedSongs.Add(song);
+			songs.Remove(song);
+			if (songs.Count == 0)
+			{
+				incrementPage();
+				//populate the songs list
+				songs = dp.GetSongList(fs.GetSongs(pageNum));
+			}
 			return song;
 		}
 

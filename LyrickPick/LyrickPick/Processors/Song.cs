@@ -5,11 +5,12 @@ using System.Web;
 
 namespace LyrickPick.Processors
 {
+	[Serializable]
 	public class Song
 	{
-		private string artist;
-		private string title;
-		private int musixmatchID;
+		public string artist;
+		public string title;
+		public int musixmatchID;
 
 		public Song()
 		{

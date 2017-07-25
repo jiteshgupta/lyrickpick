@@ -1,17 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Web;
 
 namespace LyrickPick.Processors
 {
+	[Serializable]
 	public class Context
 	{
-		private Song currentSong;
-		private string[] currentSongLines;
-		private List<String> selectedLines;
-		private bool isHintUsed = false;
-		private bool isArtistUsed = false;
+
+		public Song currentSong;
+		public string[] currentSongLines;
+		public List<String> selectedLines;
+		public bool isHintUsed = false;
+		public bool isArtistUsed = false;
 
 		public Context()
 		{
