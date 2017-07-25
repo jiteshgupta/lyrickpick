@@ -5,6 +5,7 @@ using System.Web;
 //Request library
 using System.Net;
 using System.IO;
+using Newtonsoft.Json.Linq;
 
 
 namespace LyrickPick.Processors
@@ -25,10 +26,10 @@ namespace LyrickPick.Processors
         {
             lyricsList = new List<String>();
         }
-
-        public void GetLyrics(Song song)
+        
+        public int isMatch(Song song)
         {
-            string url = "http://api.musixmatch.com/ws/1.1/" + "&apikey" + musixmatchAPIkey;
+            string url = "http://api.musixmatch.com/ws/1.1/matcher.track.get?q_artist=" + song.getArtist() + "&q_track = " + song.getTitle() + " & apikey" + musixmatchAPIkey;
 
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
             request.AutomaticDecompression = DecompressionMethods.GZip;
@@ -39,6 +40,27 @@ namespace LyrickPick.Processors
             {
                 lyricsData = reader.ReadToEnd();
             }
+            var obj = JObject.Parse(lyricsData);
+            var returnCode = (string)obj["message"]["header"]["status_code"];
+            if (returnCode.Equals("200"))
+                return (int)obj["body"]["track"]["track_id"];
+            return -1;
+        }
+
+        public string GetLyrics(Song song)
+        {
+            string url = "http://api.musixmatch.com/ws/1.1/track.lyrics.get?track_id=" + song.getMMID() + " & apikey" + musixmatchAPIkey;
+
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+            request.AutomaticDecompression = DecompressionMethods.GZip;
+
+            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+            using (Stream stream = response.GetResponseStream())
+            using (StreamReader reader = new StreamReader(stream))
+            {
+                lyricsData = reader.ReadToEnd();
+            }
+            return lyricsData;
         }
     }
     

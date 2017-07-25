@@ -8,12 +8,28 @@ namespace LyrickPick.Processors
     public class Song
     {
         static string artist;
-        static string song;
-        static string year; 
+        static string title;
+        static int musixmatchID;
         public Song(string artistName, string songTitle)
         {
             artist = artistName;
-            song = songTitle;
+            title = songTitle;
+        }
+        public string getArtist()
+        {
+            return artist;
+        }
+        public string getTitle()
+        {
+            return title;
+        }
+        public string getMMID()
+        {
+            return musixmatchID;
+        }
+        public void setTrackID(int trackID)
+        {
+            musixmatchID = trackID;
         }
     }
 }
