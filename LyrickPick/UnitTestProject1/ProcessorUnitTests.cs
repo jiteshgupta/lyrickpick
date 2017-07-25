@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using LyrickPick.Processors;
+using System.Collections.Generic;
 
 namespace LyrickPickUnitTests
 {
@@ -8,7 +9,7 @@ namespace LyrickPickUnitTests
     public class UnitTest
     {
         [TestMethod]
-        public void TestMethod1()
+        public void TestQuiz()
         {
             Quiz qz = new Quiz();
             string question = qz.Question();
@@ -17,14 +18,34 @@ namespace LyrickPickUnitTests
 
         }
         [TestMethod]
-        public void TestMethod2()
+        public void TestArtistMatch()
         {
             MMSearch mm = new MMSearch();
-            int artistID = mm.matchArtist("justin bieber");
+            List<int> artistIDs = mm.matchArtist("justin bieber");
 
             FetchSongs fs = new FetchSongs();
-            fs.GetSongsByArtist(artistID, 1);
+            fs.GetSongsByArtist(artistIDs[0], 1);
             fs.GetSongsByArtist("justin bieber", 1);
+        }
+        [TestMethod]
+        public void TestGuessMatch()
+        {
+            string artistName = "Luis Fonsi feat. Daddy Yankee & Justin Bieber";
+            string songTitle = "Despacito - Remix";
+            int MMID = 71538874;
+            int MMIDArtist = 33466556;
+            Song currentSong = new Song(artistName, songTitle, MMID, MMIDArtist);
+
+            ResultsProcessor rp = new ResultsProcessor();
+            Assert.IsTrue(rp.checkSongGuess("despacito remix", currentSong));
+            Assert.IsTrue(rp.checkArtistGuess("luis fonsi", currentSong));
+        }
+
+        [TestMethod]
+        public void TestGuessCleanup()
+        {
+            ResultsProcessor rp = new ResultsProcessor();
+            rp.fixGuess("it's gona beme");
         }
     }
 }
