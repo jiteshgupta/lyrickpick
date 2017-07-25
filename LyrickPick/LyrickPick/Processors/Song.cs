@@ -9,7 +9,7 @@ namespace LyrickPick.Processors
     {
         private string artist;
         private string title;
-        private int musixmatchID;
+        private int musixmatchID=0;
         public Song()
         {
             artist = "";
@@ -19,6 +19,12 @@ namespace LyrickPick.Processors
         {
             artist = artistName;
             title = songTitle;
+        }
+        public Song(string artistName, string songTitle, int trackID)
+        {
+            artist = artistName;
+            title = songTitle;
+            musixmatchID = trackID;
         }
         public string getArtist()
         {

@@ -29,7 +29,7 @@ namespace LyrickPick.Processors
         
         public int isMatch(Song song)
         {
-            string url = "http://api.musixmatch.com/ws/1.1/matcher.track.get?q_artist=" + song.getArtist() + "&q_track = " + song.getTitle() + " & apikey" + musixmatchAPIkey;
+            string url = "http://api.musixmatch.com/ws/1.1/matcher.track.get?q_artist=" + song.getArtist() + "&q_track=" + song.getTitle() + "&apikey=" + musixmatchAPIkey;
 
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
             request.AutomaticDecompression = DecompressionMethods.GZip;
@@ -47,9 +47,25 @@ namespace LyrickPick.Processors
             return -1;
         }
 
+        public string GetLyrics(int MMID)
+        {
+            string url = "http://api.musixmatch.com/ws/1.1/track.lyrics.get?track_id=" + MMID + "&apikey=" + musixmatchAPIkey;
+
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+            request.AutomaticDecompression = DecompressionMethods.GZip;
+
+            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+            using (Stream stream = response.GetResponseStream())
+            using (StreamReader reader = new StreamReader(stream))
+            {
+                lyricsData = reader.ReadToEnd();
+            }
+            return lyricsData;
+        }
+
         public string GetLyrics(Song song)
         {
-            string url = "http://api.musixmatch.com/ws/1.1/track.lyrics.get?track_id=" + song.getMMID() + " & apikey" + musixmatchAPIkey;
+            string url = "http://api.musixmatch.com/ws/1.1/track.lyrics.get?track_id=" + song.getMMID() + "&apikey=" + musixmatchAPIkey;
 
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
             request.AutomaticDecompression = DecompressionMethods.GZip;

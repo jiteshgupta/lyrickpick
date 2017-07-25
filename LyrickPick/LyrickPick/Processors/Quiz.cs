@@ -29,7 +29,7 @@ namespace LyrickPick.Processors
         }
         */
 
-        public string Question()
+        public string QuestionLastFM()
         {
             //select a song
             Song currentSong = selectSong();
@@ -42,6 +42,18 @@ namespace LyrickPick.Processors
                 currentSong.setMMID(fl.isMatch(currentSong));
             }
             string json = fl.GetLyrics(currentSong);
+            List<String> lines = LyricProcessor.SpliceSong(json);
+            List<String> selectedLines = new List<String>();
+            string question = LyricProcessor.selectLine(lines, selectedLines);
+            return question;
+
+        }
+        public string Question()
+        {
+            //select a song
+            Song currentSong = selectSong();
+            selectedSongs.Add(currentSong);
+            string json = fl.GetLyrics(currentSong.getMMID());
             List<String> lines = LyricProcessor.SpliceSong(json);
             List<String> selectedLines = new List<String>();
             string question = LyricProcessor.selectLine(lines, selectedLines);
