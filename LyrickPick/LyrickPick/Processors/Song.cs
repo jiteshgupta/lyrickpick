@@ -5,42 +5,47 @@ using System.Web;
 
 namespace LyrickPick.Processors
 {
-    public class Song
-    {
-        private string artist;
-        private string title;
-        private int musixmatchID=0;
-        public Song()
-        {
-            artist = "";
-            title = "";
-        }
-        public Song(string artistName, string songTitle)
-        {
-            artist = artistName;
-            title = songTitle;
-        }
-        public Song(string artistName, string songTitle, int trackID)
-        {
-            artist = artistName;
-            title = songTitle;
-            musixmatchID = trackID;
-        }
-        public string getArtist()
-        {
-            return artist;
-        }
-        public string getTitle()
-        {
-            return title;
-        }
-        public int getMMID()
-        {
-            return musixmatchID;
-        }
-        public void setMMID(int trackID)
-        {
-            musixmatchID = trackID;
-        }
-    }
+	public class Song
+	{
+		private string artist;
+		private string title;
+		private int musixmatchID;
+
+		public Song()
+		{
+		}
+
+		public Song(string artistName, string songTitle)
+		{
+			artist = artistName;
+			title = songTitle;
+		}
+
+		public Song(string artistName, string songTitle, int trackID)
+		{
+			artist = artistName;
+			title = songTitle;
+			musixmatchID = trackID;
+		}
+
+		public string getArtist()
+		{
+			return artist;
+		}
+
+		public string getTitle()
+		{
+			return title;
+		}
+
+		public int getMMID()
+		{
+			return musixmatchID;
+		}
+
+		public void setMMID(int trackID)
+		{
+			musixmatchID = trackID;
+		}
+	}
 }

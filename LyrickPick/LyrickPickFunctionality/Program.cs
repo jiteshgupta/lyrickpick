@@ -17,9 +17,19 @@ namespace LyrickPickFunctionality
 			{
 				string question = qz.Question();
 				Console.WriteLine(question);
-				string answer = Console.ReadLine();
+				string userInput = Console.ReadLine();
 
-				if (answer.Equals(qz.GetCurrentSongTitle()))
+				if (String.Equals("hint", userInput, StringComparison.OrdinalIgnoreCase))
+				{
+
+				}
+
+                else if (String.Equals("hint", userInput, StringComparison.OrdinalIgnoreCase))
+                {
+
+                }
+
+                if (String.Equals(qz.GetCurrentSongTitle(), userInput, StringComparison.OrdinalIgnoreCase))
 				{
 					Console.WriteLine("Correct!");
 				}

@@ -11,11 +11,12 @@ namespace LyrickPick.Processors
 		private List<Song> selectedSongs;
 		private FetchLyrics fl;
 		private LyricProcessor lp;
-		private int score = 0;
 		private Random random = new Random();
 
 		private Song currentSong;
 		private List<String> selectedLines;
+
+		private int totalScore = 0;
 
 		public string GetCurrentSongTitle()
 		{
