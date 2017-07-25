@@ -123,6 +123,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Processors\MMSearch.cs" />
     <Compile Include="Processors\Context.cs" />
     <Compile Include="Processors\FetchData.cs" />
     <Compile Include="Processors\FetchLyrics.cs" />

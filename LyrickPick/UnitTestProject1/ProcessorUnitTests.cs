@@ -16,5 +16,15 @@ namespace LyrickPickUnitTests
             Assert.IsNotNull(question);
 
         }
+        [TestMethod]
+        public void TestMethod2()
+        {
+            MMSearch mm = new MMSearch();
+            int artistID = mm.matchArtist("justin bieber");
+
+            FetchSongs fs = new FetchSongs();
+            fs.GetSongsByArtist(artistID, 1);
+            fs.GetSongsByArtist("justin bieber", 1);
+        }
     }
 }

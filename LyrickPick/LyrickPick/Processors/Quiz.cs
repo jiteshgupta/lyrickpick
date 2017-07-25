@@ -82,7 +82,7 @@ namespace LyrickPick.Processors
             {
                 incrementPage();
                 //populate the songs list
-                songs = dp.GetSongList(fs.GetSongsMusicXmatch(pageNum));
+                songs = dp.GetSongList(fs.GetSongs(pageNum));
             }
 			return song;
 		}
