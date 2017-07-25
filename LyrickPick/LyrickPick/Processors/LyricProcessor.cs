@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Text.RegularExpressions;
 
 namespace LyrickPick.Processors
 {
@@ -21,9 +22,23 @@ namespace LyrickPick.Processors
 			string lyricsBody = (string)j.SelectToken("message.body.lyrics.lyrics_body");
 
 			string[] lines = lyricsBody.Split('\n').ToArray();
-			return lines;
 
+			//remove lines which do not contain any alphabetic character
+			string[] outputLines = ProcessLines(lines);
+
+			return outputLines;
 		}
+
+		public string[] ProcessLines(string[] lines)
+		{
+			lines = lines.Where(x => !string.IsNullOrEmpty(x)).ToArray();
+			lines = lines.Where(x => Regex.IsMatch(x, "[a-zA-Z]")).ToArray();
+
+			//MusicXmatch appends a line in the end, "*** These Lyrics are not for Commercial Use", remove that
+			lines = lines.Where(x => !x.StartsWith("**")).ToArray();
+			return lines;
+		}
+
 		//takes in song lyrics broken into array of strings of each line
 		//returns list of lines and count of each
 		public List<Tuple<string, int>> CountLines (List<String> SongLyrics)
