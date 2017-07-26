@@ -33,7 +33,7 @@ namespace LyrickPick.Processors
         //return list of trackID
         public List<int> matchTrack(string songtitle)
         {
-            string url = "http://api.musixmatch.com/ws/1.1/track.search?q_track=" + Uri.EscapeDataString(songtitle) + "&apikey=" + musixmatchAPIkey;
+            string url = "http://api.musixmatch.com/ws/1.1/track.search?page=1&page_size=100&q_track=" + Uri.EscapeDataString(songtitle) + "&apikey=" + musixmatchAPIkey;
             string data = FetchData.FetchDataFromURL(url);
             DataParser dp = new DataParser();
             return dp.GetTrackMatches(data);
