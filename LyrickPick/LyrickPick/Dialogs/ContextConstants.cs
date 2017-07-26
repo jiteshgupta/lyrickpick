@@ -7,5 +7,7 @@
         public static string question = "Question";
 
         public static string hint = "Hint";
+
+        public static string welcomeMessage = "Welcome!!!";
     }
 }

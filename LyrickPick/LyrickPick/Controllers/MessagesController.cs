@@ -4,6 +4,9 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Connector;
+using System;
+using LyrickPick.Dialogs;
+using System.Linq;
 
 namespace LyrickPick
 {
@@ -40,11 +43,18 @@ namespace LyrickPick
                 // Handle conversation state changes, like members being added and removed
                 // Use Activity.MembersAdded and Activity.MembersRemoved and Activity.Action for info
                 // Not available in all channels
+                if (message.MembersAdded.Any(o => o.Id == message.Recipient.Id))
+                {
+                    ConnectorClient connector = new ConnectorClient(new System.Uri(message.ServiceUrl));
+                    Activity reply = message.CreateReply(ContextConstants.welcomeMessage);
+                    connector.Conversations.ReplyToActivityAsync(reply);
+                    message.Type = ActivityTypes.Message;
+                }
+
             }
             else if (message.Type == ActivityTypes.ContactRelationUpdate)
             {
-                // Handle add/remove from contact lists
-                // Activity.From + Activity.Action represent what happened
+
             }
             else if (message.Type == ActivityTypes.Typing)
             {
@@ -54,7 +64,7 @@ namespace LyrickPick
             {
             }
 
-            return null;
+            return message;
         }
     }
 }
