@@ -12,7 +12,7 @@ namespace LyrickPick.Processors
 		public static DataParser dp = new DataParser();
 		public static FetchSongs fs = new FetchSongs();
 		//populate the songs list
-		public static List<Song> songs = dp.GetSongList(fs.getSongsData());
+		public static List<Song> songs = DataParser.GetSongList(fs.getSongsData());
 
 		public Random random = new Random();
 		public int pageNum = 1;
@@ -66,7 +66,7 @@ namespace LyrickPick.Processors
 			{
 				incrementPage();
 				//populate the songs list
-				songs = dp.GetSongList(fs.GetSongs(pageNum));
+				songs = DataParser.GetSongList(fs.GetSongs(pageNum));
 			}
 			return song;
 		}

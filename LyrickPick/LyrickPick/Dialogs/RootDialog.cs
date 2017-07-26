@@ -49,7 +49,7 @@ namespace LyrickPick.Dialogs
                         Console.WriteLine(hint);
                         if (!context.ConversationData.TryGetValue(ContextConstants.hint, out hint))
                         {
-                            hint = qz.processHint();
+                            hint = qz.ProcessHint();
                             context.ConversationData.SetValue(ContextConstants.hint, hint);
                         }
                         else
