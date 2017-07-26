@@ -49,6 +49,7 @@ namespace LyrickPick
                     Activity reply = message.CreateReply(ContextConstants.welcomeMessage);
                     connector.Conversations.ReplyToActivityAsync(reply);
                     message.Type = ActivityTypes.Message;
+
                 }
 
             }
