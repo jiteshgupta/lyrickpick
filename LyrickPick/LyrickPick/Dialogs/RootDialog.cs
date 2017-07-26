@@ -59,7 +59,11 @@ namespace LyrickPick.Dialogs
                     string answer = String.Empty;
                     if ((String.Equals("pass", userInput, StringComparison.OrdinalIgnoreCase)))
                     {
-                        answer = "Skip!";
+                        answer = answer + "\nSong:- " + qz.GetCurrentContext().GetCurrentSongTitle();
+                        answer = answer + "\nArtist:- " + qz.GetCurrentContext().GetCurrentSongArtist();
+
+                        context.ConversationData.RemoveValue(ContextConstants.question);
+                        context.ConversationData.RemoveValue(ContextConstants.hint);
                     }
                     else
                     {
@@ -68,6 +72,8 @@ namespace LyrickPick.Dialogs
                         if(rp.checkSongGuess(userInput, qz.GetCurrentContext().GetCurrentSong()))
                         {
                             answer = "Correct!";
+                            context.ConversationData.RemoveValue(ContextConstants.question);
+                            context.ConversationData.RemoveValue(ContextConstants.hint);
                         }
                         else
                         {
@@ -75,19 +81,13 @@ namespace LyrickPick.Dialogs
                         }
                     }
 
-                    answer = answer + "\nSong:- " + qz.GetCurrentContext().GetCurrentSongTitle();
-                    answer = answer + "\nArtist:- " + qz.GetCurrentContext().GetCurrentSongArtist();
-
                     botOutput = answer;
-                    context.ConversationData.RemoveValue(ContextConstants.question);
-                    context.ConversationData.RemoveValue(ContextConstants.hint);
                 }
-                // return our reply to the user
-                await context.PostAsync(botOutput);
-
                 context.ConversationData.SetValue(ContextConstants.quiz, qz);
             }
 
+            // return our reply to the user
+            await context.PostAsync(botOutput);
             context.Wait(MessageReceivedAsync);
         }
     }
