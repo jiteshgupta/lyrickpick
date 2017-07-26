@@ -1,24 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.Web;
 
 namespace LyrickPick.Processors
 {
-	[Serializable]
+    [Serializable]
 	public class Context
 	{
 
 		public Song currentSong;
 		public string[] currentSongLines;
-		public List<String> selectedLines;
+		public List<string> selectedLines;
 		public bool isHintUsed = false;
 		public bool isArtistUsed = false;
 
 		public Context()
 		{
-			selectedLines = new List<String>();
+			selectedLines = new List<string>();
 		}
 
 		public void SetCurrentSong(Song currentSong)
@@ -66,7 +63,7 @@ namespace LyrickPick.Processors
 			return currentSongLines;
 		}
 
-		public List<String> GetSelectedLinesList()
+		public List<string> GetSelectedLinesList()
 		{
 			return selectedLines;
 		}

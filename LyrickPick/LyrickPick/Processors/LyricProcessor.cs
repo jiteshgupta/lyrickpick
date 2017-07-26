@@ -1,14 +1,12 @@
 ﻿using System;
 using Newtonsoft.Json.Linq;
-using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Text.RegularExpressions;
 
 namespace LyrickPick.Processors
 {
-	public class LyricProcessor
+    public class LyricProcessor
 	{
 		private Random rand = new Random();
 		//takes in json or string of one song's lyrics
@@ -40,13 +38,13 @@ namespace LyrickPick.Processors
 
 		//takes in song lyrics broken into array of strings of each line
 		//returns list of lines and count of each
-		public List<Tuple<string, int>> CountLines (List<String> SongLyrics)
+		public List<Tuple<string, int>> CountLines (List<string> SongLyrics)
 		{
 			List<Tuple<string, int>> count = new List<Tuple<string, int>>();
 			return count;
 		}
 
-		public string selectLine (string[] lines, List<String> selectedLines)
+		public string selectLine (string[] lines, List<string> selectedLines)
 		{
 			int randomLineNumber = rand.Next(0, lines.Length);
 

@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.Web;
 
 namespace LyrickPick.Processors
 {
-	[Serializable]
+    [Serializable]
 	public class Quiz
 	{
 		
@@ -74,26 +71,24 @@ namespace LyrickPick.Processors
 			return song;
 		}
 
-		public void incrementPage()
+		private void incrementPage()
 		{
 			pageNum++;
 		}
 
-		public string processHint()
+		public string ProcessHint()
 		{
-			string hint;
 			if (context.GetIsHintUsed())
 			{
-				hint = "Hint has already been used!!!";
+				return "Hint has already been used!!!";
 			}
 			else
 			{
 				context.SetIsHintUsed(true);
-				hint = lp.selectLine(context.GetCurrentSongLines(), context.GetSelectedLinesList());
+                var hint = lp.selectLine(context.GetCurrentSongLines(), context.GetSelectedLinesList());
 				context.AddtoSelectedLines(hint);
+                return hint;
 			}
-
-			return hint;
 		}
 	}
 }

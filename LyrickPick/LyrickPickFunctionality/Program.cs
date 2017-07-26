@@ -1,13 +1,9 @@
 ﻿using LyrickPick.Processors;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LyrickPickFunctionality
 {
-	public class Program
+    public class Program
 	{
 		public static void Main(string[] args)
 		{
@@ -19,14 +15,14 @@ namespace LyrickPickFunctionality
 				Console.WriteLine(question);
 				string userInput = Console.ReadLine();
 
-				if (String.Equals("hint", userInput, StringComparison.OrdinalIgnoreCase))
+				if (string.Equals("hint", userInput, StringComparison.OrdinalIgnoreCase))
 				{
-					string hint = qz.processHint();
+					string hint = qz.ProcessHint();
 					Console.WriteLine(hint);
 					userInput = Console.ReadLine();
 				}
 
-				if (String.Equals(qz.GetCurrentContext().GetCurrentSongTitle(), userInput, StringComparison.OrdinalIgnoreCase))
+				if (string.Equals(qz.GetCurrentContext().GetCurrentSongTitle(), userInput, StringComparison.OrdinalIgnoreCase))
 				{
 					Console.WriteLine("Correct!");
 				}

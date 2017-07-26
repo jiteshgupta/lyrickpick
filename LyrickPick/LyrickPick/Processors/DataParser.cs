@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Newtonsoft.Json;
 
 namespace LyrickPick.Processors
 {
-	public class DataParser
+    public class DataParser
 	{
-		public List<Song> GetSongList(string jsonData)
+		public static List<Song> GetSongList(string jsonData)
 		{
-			List<Song> items = new List<Song>();
+			var items = new List<Song>();
 
 			dynamic dynObj = JsonConvert.DeserializeObject(jsonData);
 
@@ -24,9 +23,10 @@ namespace LyrickPick.Processors
 
 			return items;
 		}
-        public List<int> GetTrackMatches(string jsonData)
+
+        public static List<int> GetTrackMatches(string jsonData)
         {
-            List<int> items = new List<int>();
+            var items = new List<int>();
 
             dynamic dynObj = JsonConvert.DeserializeObject(jsonData);
 
@@ -38,9 +38,9 @@ namespace LyrickPick.Processors
 
             return items;
         }
-        public List<int> GetArtistMatches(string jsonData)
+        public static List<int> GetArtistMatches(string jsonData)
         {
-            List<int> items = new List<int>();
+            var items = new List<int>();
 
             dynamic dynObj = JsonConvert.DeserializeObject(jsonData);
 
@@ -52,7 +52,14 @@ namespace LyrickPick.Processors
 
             return items;
         }
-        //replace misspellings
+
+        //
+        /// <summary>
+        /// Replace Misspellings
+        /// </summary>
+        /// <param name="userGuess">User's Guess</param>
+        /// <param name="jsonData">Bing Spellcheck return</param>
+        /// <returns>Corrected user guess</returns>
         public string FixGuess(string userGuess, string jsonData)
         {
             string result = userGuess;
@@ -60,12 +67,9 @@ namespace LyrickPick.Processors
 
             foreach (var flaggedToken in dynObj.flaggedTokens)
             {
-                string token = flaggedToken.token;
-                //var test = flaggedToken.suggestions;
-                //var test2 = flaggedToken.token.suggestions.suggestion;
-                string suggestion = flaggedToken.suggestions[0].suggestion;
+                var token = flaggedToken.token;
+                var suggestion = flaggedToken.suggestions[0].suggestion;
                 result = result.Replace(token, suggestion);
-
             }
 
             return result;
