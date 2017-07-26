@@ -42,10 +42,25 @@ namespace LyrickPickUnitTests
         }
 
         [TestMethod]
+        public void TestSongSelection()
+        {
+            Quiz qz = new Quiz();
+            int questions = 100;
+            string title;
+            for (int i = 1; i <= questions; i++)
+            {
+                title = qz.selectSong().getTitle();
+            }
+           
+        }
+
+        [TestMethod]
         public void TestGuessCleanup()
         {
             ResultsProcessor rp = new ResultsProcessor();
             rp.fixGuess("it's gona beme");
         }
+
+
     }
 }
