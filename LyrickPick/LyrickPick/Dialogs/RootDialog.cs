@@ -43,25 +43,39 @@ namespace LyrickPick.Dialogs
                 }
                 else if ((String.Equals("hint", userInput, StringComparison.OrdinalIgnoreCase)))
                 {
-                    string hint = "You have already asked for hint: " + qz.GetFoo();
+                    string hint = String.Empty;
                     Console.WriteLine(hint);
                     if (!context.ConversationData.TryGetValue(ContextConstants.hint, out hint))
                     {
                         hint = qz.processHint();
                         context.ConversationData.SetValue(ContextConstants.hint, hint);
                     }
+                    else
+                    {
+                        hint = "Sorry but you have already asked for hint";
+                    }
                     botOutput = hint;
                 }
                 else {
                     string answer = String.Empty;
-                    if (String.Equals(qz.GetCurrentContext().GetCurrentSongTitle(), userInput, StringComparison.OrdinalIgnoreCase))
+                    if ((String.Equals("pass", userInput, StringComparison.OrdinalIgnoreCase)))
                     {
-                        answer = "Correct!";
+                        answer = "Skip!";
                     }
                     else
                     {
-                        answer = "Wrong!";
+                        ResultsProcessor rp = new ResultsProcessor();
+                        //if (String.Equals(qz.GetCurrentContext().GetCurrentSongTitle(), userInput, StringComparison.OrdinalIgnoreCase))
+                        if(rp.checkSongGuess(userInput, qz.GetCurrentContext().GetCurrentSong()))
+                        {
+                            answer = "Correct!";
+                        }
+                        else
+                        {
+                            answer = "Wrong!";
+                        }
                     }
+
                     answer = answer + "\nSong:- " + qz.GetCurrentContext().GetCurrentSongTitle();
                     answer = answer + "\nArtist:- " + qz.GetCurrentContext().GetCurrentSongArtist();
 
