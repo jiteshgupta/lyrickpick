@@ -29,12 +29,11 @@ namespace LyrickPick.Dialogs
 
             string userInput = activity.Text;
             string botOutput = String.Empty;
+            string question = String.Empty;
 
             Quiz qz;
             if (context.ConversationData.TryGetValue(ContextConstants.quiz, out qz))
             {
-                string question = String.Empty;
-
                 if (!context.ConversationData.TryGetValue(ContextConstants.question, out question))
                 {
                     question = qz.Question();
@@ -83,11 +82,12 @@ namespace LyrickPick.Dialogs
                     context.ConversationData.RemoveValue(ContextConstants.question);
                     context.ConversationData.RemoveValue(ContextConstants.hint);
                 }
+                // return our reply to the user
+                await context.PostAsync(botOutput);
+
                 context.ConversationData.SetValue(ContextConstants.quiz, qz);
             }
 
-            // return our reply to the user
-            await context.PostAsync(botOutput);
             context.Wait(MessageReceivedAsync);
         }
     }
