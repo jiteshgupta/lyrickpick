@@ -17,6 +17,11 @@ namespace LyrickPick.Processors
         public Boolean checkSongGuess(string userGuess, Song currentSong)
         {
             List<int> guesses = mm.matchTrack(userGuess);
+            if (guesses.Contains(currentSong.getMMID()))
+            {
+                return true;
+            }
+            guesses = mm.matchTrack(fixGuess(userGuess));
             return guesses.Contains(currentSong.getMMID());
         }
         public string fixGuess(string userGuess)
