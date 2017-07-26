@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
 
 
 namespace LyrickPick.Processors
 {
-	public class FetchLyrics
+    public class FetchLyrics
 	{
         private static string musixmatchAPIkey = "8b7654870c8395335a30eb19039218f6";
-        private string lyricsData = String.Empty;
+        private string lyricsData = string.Empty;
 		
         public string GetLyricsData()
 		{

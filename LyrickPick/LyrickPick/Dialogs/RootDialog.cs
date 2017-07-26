@@ -28,8 +28,8 @@ namespace LyrickPick.Dialogs
             var activity = await result as Activity;
 
             string userInput = activity.Text;
-            string botOutput = String.Empty;
-            string question = String.Empty;
+            string botOutput = string.Empty;
+            string question = string.Empty;
 
             Quiz qz;
             if (context.ConversationData.TryGetValue(ContextConstants.quiz, out qz))
@@ -40,13 +40,13 @@ namespace LyrickPick.Dialogs
                     context.ConversationData.SetValue(ContextConstants.question, question);
                     botOutput = question;
                 }
-                else if ((String.Equals("hint", userInput, StringComparison.OrdinalIgnoreCase)))
+                else if ((string.Equals("hint", userInput, StringComparison.OrdinalIgnoreCase)))
                 {
-                    string hint = String.Empty;
+                    string hint = string.Empty;
                     Console.WriteLine(hint);
                     if (!context.ConversationData.TryGetValue(ContextConstants.hint, out hint))
                     {
-                        hint = qz.processHint();
+                        hint = qz.ProcessHint();
                         context.ConversationData.SetValue(ContextConstants.hint, hint);
                     }
                     else
@@ -56,8 +56,8 @@ namespace LyrickPick.Dialogs
                     botOutput = hint;
                 }
                 else {
-                    string answer = String.Empty;
-                    if ((String.Equals("pass", userInput, StringComparison.OrdinalIgnoreCase)))
+                    string answer = string.Empty;
+                    if ((string.Equals("pass", userInput, StringComparison.OrdinalIgnoreCase)))
                     {
                         answer = answer + "\nSong:- " + qz.GetCurrentContext().GetCurrentSongTitle();
                         answer = answer + "\nArtist:- " + qz.GetCurrentContext().GetCurrentSongArtist();
@@ -68,7 +68,7 @@ namespace LyrickPick.Dialogs
                     else
                     {
                         ResultsProcessor rp = new ResultsProcessor();
-                        //if (String.Equals(qz.GetCurrentContext().GetCurrentSongTitle(), userInput, StringComparison.OrdinalIgnoreCase))
+                        //if (string.Equals(qz.GetCurrentContext().GetCurrentSongTitle(), userInput, StringComparison.OrdinalIgnoreCase))
                         if(rp.checkSongGuess(userInput, qz.GetCurrentContext().GetCurrentSong()))
                         {
                             answer = "Correct!";

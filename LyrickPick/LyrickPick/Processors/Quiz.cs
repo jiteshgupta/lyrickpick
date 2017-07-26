@@ -1,19 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.Web;
 
 namespace LyrickPick.Processors
 {
-	[Serializable]
+    [Serializable]
 	public class Quiz
 	{
 		public List<Song> songs;
 		public List<Song> selectedSongs;
 		public FetchLyrics fl;
 		public LyricProcessor lp;
-		public DataParser dp;
 		public FetchSongs fs;
 		public Random random = new Random();
 		public int pageNum = 1;
@@ -44,10 +40,9 @@ namespace LyrickPick.Processors
 
 			fl = new FetchLyrics();
 			fs = new FetchSongs();
-			dp = new DataParser();
 			lp = new LyricProcessor();
 			//populate the songs list
-			songs = dp.GetSongList(fs.getSongsData());
+			songs = DataParser.GetSongList(fs.getSongsData());
 
 		}
 		/*stretch goal
@@ -90,31 +85,29 @@ namespace LyrickPick.Processors
 			{
 				incrementPage();
 				//populate the songs list
-				songs = dp.GetSongList(fs.GetSongs(pageNum));
+				songs = DataParser.GetSongList(fs.GetSongs(pageNum));
 			}
 			return song;
 		}
 
-		public void incrementPage()
+		private void incrementPage()
 		{
 			pageNum++;
 		}
 
-		public string processHint()
+		public string ProcessHint()
 		{
-			string hint;
 			if (context.GetIsHintUsed())
 			{
-				hint = "Hint has already been used!!!";
+				return "Hint has already been used!!!";
 			}
 			else
 			{
 				context.SetIsHintUsed(true);
-				hint = lp.selectLine(context.GetCurrentSongLines(), context.GetSelectedLinesList());
+                var hint = lp.selectLine(context.GetCurrentSongLines(), context.GetSelectedLinesList());
 				context.AddtoSelectedLines(hint);
+                return hint;
 			}
-
-			return hint;
 		}
 	}
 }
