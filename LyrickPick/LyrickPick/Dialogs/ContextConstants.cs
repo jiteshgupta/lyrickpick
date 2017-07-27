@@ -11,5 +11,7 @@
         public static string hint = "Hint";
 
         public static string welcomeMessage = "Welcome to the Lyric Pick Game! Guess the song title, or say \"pass\" or \"hint\" to proceed in the game. Enter anything to start..." ;
+
+        public static string startMessage = "Welcome to the Lyric Pick Game! Guess the song title, or say \"pass\" or \"hint\" to proceed in the game. Let's start...";
     }
 }

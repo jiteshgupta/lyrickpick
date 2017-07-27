@@ -10,7 +10,7 @@ namespace LyrickPick.Dialogs
     [Serializable]
     public class RootDialog : IDialog<object>
     {
-        public Task StartAsync(IDialogContext context)
+        public async Task StartAsync(IDialogContext context)
         {
             Quiz qz;
             if (!context.ConversationData.TryGetValue(ContextConstants.quiz, out qz))
@@ -18,8 +18,9 @@ namespace LyrickPick.Dialogs
                 qz = new Quiz();
                 context.ConversationData.SetValue(ContextConstants.quiz, qz);
             }
+            await context.PostAsync(ContextConstants.startMessage);
             context.Wait(MessageReceivedAsync);
-            return Task.CompletedTask;
+            return;
         }
 
         private async Task MessageReceivedAsync(IDialogContext context, IAwaitable<object> result)
