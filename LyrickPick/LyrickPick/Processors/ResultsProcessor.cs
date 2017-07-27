@@ -25,8 +25,7 @@ namespace LyrickPick.Processors
         {
             string url = "https://api.cognitive.microsoft.com/bing/v5.0/spellcheck/?text=" + Uri.EscapeDataString(userGuess);
             string data = FetchData.FetchDataBSC(url);
-            DataParser dp = new DataParser();
-            string result = dp.FixGuess(userGuess, data);
+            string result = DataParser.FixGuess(userGuess, data);
             return result;
         }
     }

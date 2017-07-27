@@ -3,13 +3,12 @@ using System.Collections.Generic;
 
 namespace LyrickPick.Processors
 {
-    [Serializable]
+	[Serializable]
 	public class Quiz
 	{
 		
 		public static FetchLyrics fl = new FetchLyrics();
-		public static LyricProcessor lp = new LyricProcessor(); 
-		public static DataParser dp = new DataParser();
+		public static LyricProcessor lp = new LyricProcessor();
 		public static FetchSongs fs = new FetchSongs();
 		//populate the songs list
 		public static List<Song> songs = DataParser.GetSongList(fs.getSongsData());
@@ -85,9 +84,9 @@ namespace LyrickPick.Processors
 			else
 			{
 				context.SetIsHintUsed(true);
-                var hint = lp.selectLine(context.GetCurrentSongLines(), context.GetSelectedLinesList());
+				var hint = lp.selectLine(context.GetCurrentSongLines(), context.GetSelectedLinesList());
 				context.AddtoSelectedLines(hint);
-                return hint;
+				return hint;
 			}
 		}
 	}
