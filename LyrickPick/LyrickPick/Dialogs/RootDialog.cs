@@ -79,6 +79,10 @@ namespace LyrickPick.Dialogs
                             if (rp.checkSongGuess(userInput, qz.GetCurrentContext().GetCurrentSong()))
                             {
                                 answer = "Correct!";
+
+                                answer = answer + "\nSong:- " + qz.GetCurrentContext().GetCurrentSongTitle();
+                                answer = answer + "\nArtist:- " + qz.GetCurrentContext().GetCurrentSongArtist();
+
                                 context.ConversationData.RemoveValue(ContextConstants.question);
                                 context.ConversationData.RemoveValue(ContextConstants.hint);
                                 userMessage = true;
