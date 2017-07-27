@@ -44,7 +44,7 @@ namespace LyrickPick.Dialogs
                         botOutput = question;
                         userMessage = false;
                     }
-                    else if ((String.Equals("hint", userInput, StringComparison.OrdinalIgnoreCase)))
+                    else if ((String.Equals("hint", userInput.Trim(), StringComparison.OrdinalIgnoreCase)))
                     {
                         string hint = String.Empty;
                         Console.WriteLine(hint);
@@ -63,7 +63,7 @@ namespace LyrickPick.Dialogs
                     else
                     {
                         string answer = String.Empty;
-                        if ((String.Equals("pass", userInput, StringComparison.OrdinalIgnoreCase)))
+                        if ((String.Equals("pass", userInput.Trim(), StringComparison.OrdinalIgnoreCase)))
                         {
                             answer = answer + "\nSong:- " + qz.GetCurrentContext().GetCurrentSongTitle();
                             answer = answer + "\nArtist:- " + qz.GetCurrentContext().GetCurrentSongArtist();
@@ -85,7 +85,7 @@ namespace LyrickPick.Dialogs
                             }
                             else
                             {
-                                answer = "Wrong!";
+                                answer = "Wrong! Guess again, or \"pass\"";
                                 userMessage = false;
                             }
                         }

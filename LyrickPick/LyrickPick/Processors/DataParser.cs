@@ -67,8 +67,8 @@ namespace LyrickPick.Processors
 
 			foreach (var flaggedToken in dynObj.flaggedTokens)
 			{
-				var token = flaggedToken.token;
-				var suggestion = flaggedToken.suggestions[0].suggestion;
+				string token = flaggedToken.token;
+				string suggestion = flaggedToken.suggestions[0].suggestion;
 				result = result.Replace(token, suggestion);
 			}
 
