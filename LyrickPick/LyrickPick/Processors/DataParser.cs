@@ -63,7 +63,7 @@ namespace LyrickPick.Processors
 		public static string FixGuess(string userGuess, string jsonData)
 		{
 			string result = userGuess;
-			dynamic dynObj = JsonConvert.DeserializeObject(jsonData);
+            BingSpellCheck.Rootobject dynObj = JsonConvert.DeserializeObject<BingSpellCheck.Rootobject>(jsonData);
 
 			foreach (var flaggedToken in dynObj.flaggedTokens)
 			{

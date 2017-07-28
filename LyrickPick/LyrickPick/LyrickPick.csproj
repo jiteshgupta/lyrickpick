@@ -124,6 +124,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Processors\JSONObjects.cs" />
     <Compile Include="Processors\ResultsProcessor.cs" />
     <Compile Include="Processors\MMSearch.cs" />
     <Compile Include="Processors\Context.cs" />
