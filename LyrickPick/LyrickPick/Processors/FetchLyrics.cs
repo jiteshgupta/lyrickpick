@@ -25,6 +25,7 @@ namespace LyrickPick.Processors
 			return GetLyrics(song.getMMID());
 		}
 
+        /*not used
 		public int isMatch(Song song)
 		{
 			string url = "http://api.musixmatch.com/ws/1.1/matcher.track.get?q_artist=" + song.getArtist() + "&q_track=" + song.getTitle() + "&apikey=" + musixmatchAPIkey;
@@ -36,6 +37,7 @@ namespace LyrickPick.Processors
 				return (int)obj["body"]["track"]["commontrack_id"];
 			return -1;
 		}
+        */
 	}
 	
 }

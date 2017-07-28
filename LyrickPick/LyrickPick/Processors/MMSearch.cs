@@ -35,7 +35,16 @@ namespace LyrickPick.Processors
             
             return DataParser.GetTrackMatches(data);
         }
-        
+
+        //return music_genre_id
+        public List<int> matchGenre(string genre)
+        {
+            string url = "http://api.musixmatch.com/ws/1.1/track.search?page=1&page_size=100&q_track=" + Uri.EscapeDataString(genre) + "&apikey=" + musixmatchAPIkey;
+            string data = FetchData.FetchDataFromURL(url);
+
+            return DataParser.GetTrackMatches(data);
+        }
+
         public int matchGenrebyArtist(string artist)
         {
             string url = "http://api.musixmatch.com/ws/1.1/artist.search?q_artist=" + Uri.EscapeDataString(artist) + "&apikey=" + musixmatchAPIkey;
