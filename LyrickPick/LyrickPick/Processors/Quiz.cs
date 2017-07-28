@@ -6,15 +6,13 @@ namespace LyrickPick.Processors
 	[Serializable]
 	public class Quiz
 	{
-		
-		public static FetchLyrics fl = new FetchLyrics();
-		public static LyricProcessor lp = new LyricProcessor();
-		public static FetchSongs fs = new FetchSongs();
-		//populate the songs list
-		public static List<Song> songs = DataParser.GetSongList(fs.getSongsData());
+		public FetchLyrics fl;
+		public LyricProcessor lp;
+		public FetchSongs fs;
+		public List<Song> songs;
 
 		public Random random = new Random();
-		public static int pageNum = 1;
+		public int pageNum = 1;
 		public Context context;
 		public int totalScore = 0;
 
@@ -23,14 +21,28 @@ namespace LyrickPick.Processors
 			return context;
 		}
 
-		public LyricProcessor GetLyricProcessor()
+		public FetchSongs GetFetchSongs()
 		{
-			return lp;
+			return fs;
 		}
 
-		public Quiz()
+		public List<Song> GetSongsList()
 		{
+			return songs;
+		}
 
+		public void SetSongsList(List<Song> songsList)
+		{
+			songs = songsList;
+		}
+
+		public void Initialize()
+		{
+			fl = new FetchLyrics();
+			lp = new LyricProcessor();
+			fs = new FetchSongs();
+			//populate the songs list
+			songs = DataParser.GetSongList(fs.getSongsData());
 		}
 
 		public string Question()

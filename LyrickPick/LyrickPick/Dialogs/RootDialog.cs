@@ -16,7 +16,7 @@ namespace LyrickPick.Dialogs
             Quiz qz;
             if (!context.UserData.TryGetValue(ContextConstants.quiz, out qz))
             {
-                qz = new Quiz();
+                qz = getQuiz();
                 context.UserData.SetValue(ContextConstants.quiz, qz);
                 context.UserData.SetValue(ContextConstants.artist, false);
             }
@@ -44,7 +44,7 @@ namespace LyrickPick.Dialogs
                         bool isArtistSet;
                         if (context.UserData.TryGetValue(ContextConstants.artist, out isArtistSet) && isArtistSet)
                         {
-                            qz = new Quiz();
+                            qz = getQuiz();
 
                             ResultsProcessor rp = new ResultsProcessor();
                             MMSearch mm = new MMSearch();
@@ -54,12 +54,12 @@ namespace LyrickPick.Dialogs
                             if (artists.Count != 0)
                             {
                                 int artistID = mm.matchArtist(artistName)[0];
-                                Quiz.songs = DataParser.GetSongList(Quiz.fs.GetSongsByArtist(artistID, Quiz.pageNum));
+                                List<Song> songs = DataParser.GetSongList(qz.GetFetchSongs().GetSongsByArtist(artistID));
+                                qz.SetSongsList(songs);
                                 botOutput = ContextConstants.artistFound + artistName;
                             }
                             else
                             {
-                                Quiz.songs = DataParser.GetSongList(Quiz.fs.getSongsData());
                                 botOutput = ContextConstants.noArtistFound;
                             }
 
@@ -87,8 +87,7 @@ namespace LyrickPick.Dialogs
                     }
                     else if ((String.Equals("start", userInput.Trim(), StringComparison.OrdinalIgnoreCase)) || (String.Equals("restart", userInput.Trim(), StringComparison.OrdinalIgnoreCase)))
                     {
-                        qz = new Quiz();
-                        Quiz.songs = DataParser.GetSongList(Quiz.fs.getSongsData());
+                        qz = getQuiz();
                         botOutput = ContextConstants.startMessage;
 
                         context.UserData.RemoveValue(ContextConstants.question);
@@ -153,6 +152,13 @@ namespace LyrickPick.Dialogs
                 await context.PostAsync(botOutput);
             }
             context.Wait(MessageReceivedAsync);
+        }
+
+        private Quiz getQuiz()
+        {
+            Quiz qz = new Quiz();
+            qz.Initialize();
+            return qz;
         }
     }
 }
