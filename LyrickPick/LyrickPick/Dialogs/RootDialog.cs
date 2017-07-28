@@ -34,8 +34,8 @@ namespace LyrickPick.Dialogs
 
             while (userMessage)
             {
-                Quiz qz = context.ConversationData.GetValue<Quiz>(ContextConstants.quiz);
-                if (true)
+                Quiz qz;
+                if (context.ConversationData.TryGetValue(ContextConstants.quiz, out qz))
                 {
                     if (!context.ConversationData.TryGetValue(ContextConstants.question, out question))
                     {
@@ -43,6 +43,16 @@ namespace LyrickPick.Dialogs
                         context.ConversationData.SetValue(ContextConstants.question, question);
                         botOutput = question;
                         userMessage = false;
+                    }
+                    else if ((String.Equals("start", userInput.Trim(), StringComparison.OrdinalIgnoreCase)) || (String.Equals("restart", userInput.Trim(), StringComparison.OrdinalIgnoreCase)))
+                    {
+                        qz = new Quiz();
+                        Quiz.songs = DataParser.GetSongList(Quiz.fs.getSongsData());
+                        botOutput = ContextConstants.startMessage;
+
+                        context.ConversationData.RemoveValue(ContextConstants.question);
+                        context.ConversationData.RemoveValue(ContextConstants.hint);
+                        userMessage = true;
                     }
                     else if ((String.Equals("hint", userInput.Trim(), StringComparison.OrdinalIgnoreCase)))
                     {
