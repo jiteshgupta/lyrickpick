@@ -14,11 +14,11 @@ namespace LyrickPick.Dialogs
         public async Task StartAsync(IDialogContext context)
         {
             Quiz qz;
-            if (!context.ConversationData.TryGetValue(ContextConstants.quiz, out qz))
+            if (!context.UserData.TryGetValue(ContextConstants.quiz, out qz))
             {
                 qz = new Quiz();
-                context.ConversationData.SetValue(ContextConstants.quiz, qz);
-                context.ConversationData.SetValue(ContextConstants.artist, false);
+                context.UserData.SetValue(ContextConstants.quiz, qz);
+                context.UserData.SetValue(ContextConstants.artist, false);
             }
             await context.PostAsync(ContextConstants.startMessage);
             context.Wait(MessageReceivedAsync);
@@ -37,12 +37,12 @@ namespace LyrickPick.Dialogs
             while (userMessage)
             {
                 Quiz qz;
-                if (context.ConversationData.TryGetValue(ContextConstants.quiz, out qz))
+                if (context.UserData.TryGetValue(ContextConstants.quiz, out qz))
                 {
-                    if (!context.ConversationData.TryGetValue(ContextConstants.question, out question))
+                    if (!context.UserData.TryGetValue(ContextConstants.question, out question))
                     {
                         bool isArtistSet;
-                        if (context.ConversationData.TryGetValue(ContextConstants.artist, out isArtistSet) && isArtistSet)
+                        if (context.UserData.TryGetValue(ContextConstants.artist, out isArtistSet) && isArtistSet)
                         {
                             qz = new Quiz();
 
@@ -63,15 +63,15 @@ namespace LyrickPick.Dialogs
                                 botOutput = ContextConstants.noArtistFound;
                             }
 
-                            context.ConversationData.SetValue(ContextConstants.artist, false);
-                            context.ConversationData.RemoveValue(ContextConstants.question);
-                            context.ConversationData.RemoveValue(ContextConstants.hint);
+                            context.UserData.SetValue(ContextConstants.artist, false);
+                            context.UserData.RemoveValue(ContextConstants.question);
+                            context.UserData.RemoveValue(ContextConstants.hint);
                             userMessage = true;
                         }
                         else
                         {
                             question = qz.Question();
-                            context.ConversationData.SetValue(ContextConstants.question, question);
+                            context.UserData.SetValue(ContextConstants.question, question);
                             botOutput = question;
                             userMessage = false;
                         }
@@ -79,10 +79,10 @@ namespace LyrickPick.Dialogs
                     else if(String.Equals("select artist", userInput.Trim(), StringComparison.OrdinalIgnoreCase) || String.Equals("change artist", userInput.Trim(), StringComparison.OrdinalIgnoreCase))
                     {
                         botOutput = ContextConstants.artistMessage;
-                        context.ConversationData.SetValue(ContextConstants.artist, true);
+                        context.UserData.SetValue(ContextConstants.artist, true);
 
-                        context.ConversationData.RemoveValue(ContextConstants.question);
-                        context.ConversationData.RemoveValue(ContextConstants.hint);
+                        context.UserData.RemoveValue(ContextConstants.question);
+                        context.UserData.RemoveValue(ContextConstants.hint);
                         userMessage = false;
                     }
                     else if ((String.Equals("start", userInput.Trim(), StringComparison.OrdinalIgnoreCase)) || (String.Equals("restart", userInput.Trim(), StringComparison.OrdinalIgnoreCase)))
@@ -91,18 +91,18 @@ namespace LyrickPick.Dialogs
                         Quiz.songs = DataParser.GetSongList(Quiz.fs.getSongsData());
                         botOutput = ContextConstants.startMessage;
 
-                        context.ConversationData.RemoveValue(ContextConstants.question);
-                        context.ConversationData.RemoveValue(ContextConstants.hint);
+                        context.UserData.RemoveValue(ContextConstants.question);
+                        context.UserData.RemoveValue(ContextConstants.hint);
                         userMessage = true;
                     }
                     else if ((String.Equals("hint", userInput.Trim(), StringComparison.OrdinalIgnoreCase)))
                     {
                         string hint = String.Empty;
                         Console.WriteLine(hint);
-                        if (!context.ConversationData.TryGetValue(ContextConstants.hint, out hint))
+                        if (!context.UserData.TryGetValue(ContextConstants.hint, out hint))
                         {
                             hint = qz.ProcessHint();
-                            context.ConversationData.SetValue(ContextConstants.hint, hint);
+                            context.UserData.SetValue(ContextConstants.hint, hint);
                         }
                         else
                         {
@@ -119,8 +119,8 @@ namespace LyrickPick.Dialogs
                             answer = answer + "\nSong:- " + qz.GetCurrentContext().GetCurrentSongTitle();
                             answer = answer + "\nArtist:- " + qz.GetCurrentContext().GetCurrentSongArtist();
 
-                            context.ConversationData.RemoveValue(ContextConstants.question);
-                            context.ConversationData.RemoveValue(ContextConstants.hint);
+                            context.UserData.RemoveValue(ContextConstants.question);
+                            context.UserData.RemoveValue(ContextConstants.hint);
                             userMessage = true;
                         }
                         else
@@ -134,8 +134,8 @@ namespace LyrickPick.Dialogs
                                 answer = answer + "\nSong:- " + qz.GetCurrentContext().GetCurrentSongTitle();
                                 answer = answer + "\nArtist:- " + qz.GetCurrentContext().GetCurrentSongArtist();
 
-                                context.ConversationData.RemoveValue(ContextConstants.question);
-                                context.ConversationData.RemoveValue(ContextConstants.hint);
+                                context.UserData.RemoveValue(ContextConstants.question);
+                                context.UserData.RemoveValue(ContextConstants.hint);
                                 userMessage = true;
                             }
                             else
@@ -148,7 +148,7 @@ namespace LyrickPick.Dialogs
                     }
                 }
 
-                context.ConversationData.SetValue(ContextConstants.quiz, qz);
+                context.UserData.SetValue(ContextConstants.quiz, qz);
                 // return our reply to the user
                 await context.PostAsync(botOutput);
             }
