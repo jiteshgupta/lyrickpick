@@ -39,9 +39,30 @@ namespace LyrickPick.Dialogs
                 {
                     if (!context.ConversationData.TryGetValue(ContextConstants.question, out question))
                     {
-                        question = qz.Question();
-                        context.ConversationData.SetValue(ContextConstants.question, question);
-                        botOutput = question;
+                        if (context.ConversationData.GetValue<Boolean>(ContextConstants.artist))
+                        {
+                            qz = new Quiz();
+
+                            ResultsProcessor rp = new ResultsProcessor();
+                            string artistName = rp.fixGuess(userInput.Trim());
+
+                            context.ConversationData.SetValue(ContextConstants.artist, false);
+                        }
+                        else
+                        {
+                            question = qz.Question();
+                            context.ConversationData.SetValue(ContextConstants.question, question);
+                            botOutput = question;
+                            userMessage = false;
+                        }
+                    }
+                    else if(String.Equals("select artist", userInput.Trim(), StringComparison.OrdinalIgnoreCase) || String.Equals("change artist", userInput.Trim(), StringComparison.OrdinalIgnoreCase))
+                    {
+                        botOutput = ContextConstants.artistMessage;
+                        context.ConversationData.SetValue(ContextConstants.artist, true);
+
+                        context.ConversationData.RemoveValue(ContextConstants.question);
+                        context.ConversationData.RemoveValue(ContextConstants.hint);
                         userMessage = false;
                     }
                     else if ((String.Equals("start", userInput.Trim(), StringComparison.OrdinalIgnoreCase)) || (String.Equals("restart", userInput.Trim(), StringComparison.OrdinalIgnoreCase)))
