@@ -35,8 +35,7 @@ namespace LyrickPick
         {
             if (message.Type == ActivityTypes.DeleteUserData)
             {
-                // Implement user deletion here
-                // If we handle user deletion, return a real message
+
             }
             else if (message.Type == ActivityTypes.ConversationUpdate)
             {

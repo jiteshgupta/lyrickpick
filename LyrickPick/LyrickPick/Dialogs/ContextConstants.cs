@@ -21,5 +21,7 @@
         public static string artistFound = "Alright! Asking lyrics of songs by ";
 
         public static string noArtistFound = "Sorry! Could not found the artist. Starting the default game again...";
+
+        public static string deleteMessage = "Deleting User Data. Starting again...";
     }
 }
