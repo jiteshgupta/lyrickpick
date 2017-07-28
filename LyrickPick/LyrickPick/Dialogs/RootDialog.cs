@@ -41,7 +41,8 @@ namespace LyrickPick.Dialogs
                 {
                     if (!context.ConversationData.TryGetValue(ContextConstants.question, out question))
                     {
-                        if (context.ConversationData.GetValue<Boolean>(ContextConstants.artist))
+                        bool isArtistSet;
+                        if (context.ConversationData.TryGetValue(ContextConstants.artist, out isArtistSet) && isArtistSet)
                         {
                             qz = new Quiz();
 
