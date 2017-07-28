@@ -44,15 +44,14 @@ namespace LyrickPick.Dialogs
                         bool isArtistSet;
                         if (context.UserData.TryGetValue(ContextConstants.artist, out isArtistSet) && isArtistSet)
                         {
-                            qz = getQuiz();
-
                             ResultsProcessor rp = new ResultsProcessor();
                             MMSearch mm = new MMSearch();
                             string artistName = rp.fixGuess(userInput.Trim());
-
                             List<int> artists = mm.matchArtist(artistName);
+
                             if (artists.Count != 0)
                             {
+                                qz = getQuiz();
                                 int artistID = mm.matchArtist(artistName)[0];
                                 List<Song> songs = DataParser.GetSongList(qz.GetFetchSongs().GetSongsByArtist(artistID));
                                 qz.SetSongsList(songs);
