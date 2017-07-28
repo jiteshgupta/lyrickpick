@@ -14,7 +14,7 @@ namespace LyrickPick.Processors
 		public static List<Song> songs = DataParser.GetSongList(fs.getSongsData());
 
 		public Random random = new Random();
-		public int pageNum = 1;
+		public static int pageNum = 1;
 		public Context context;
 		public int totalScore = 0;
 

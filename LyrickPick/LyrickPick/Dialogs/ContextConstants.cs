@@ -17,5 +17,9 @@
         public static string startMessage = "Welcome to the Lyric Pick Game! Guess the song title based on the lyric excerpt. If you're stuck, ask for an additional \"hint\". If you wanna skip, just \"pass\". Let's start...";
 
         public static string artistMessage = "Cool! Enter the Artist Name...";
+
+        public static string artistFound = "Alright! Asking lyrics of songs by ";
+
+        public static string noArtistFound = "Sorry! Could not found the artist. Starting the default game again...";
     }
 }

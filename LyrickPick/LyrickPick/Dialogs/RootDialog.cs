@@ -4,6 +4,7 @@ using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Connector;
 using LyrickPick.Processors;
 using System.Diagnostics;
+using System.Collections.Generic;
 
 namespace LyrickPick.Dialogs
 {
@@ -17,6 +18,7 @@ namespace LyrickPick.Dialogs
             {
                 qz = new Quiz();
                 context.ConversationData.SetValue(ContextConstants.quiz, qz);
+                context.ConversationData.SetValue(ContextConstants.artist, false);
             }
             await context.PostAsync(ContextConstants.startMessage);
             context.Wait(MessageReceivedAsync);
@@ -44,9 +46,26 @@ namespace LyrickPick.Dialogs
                             qz = new Quiz();
 
                             ResultsProcessor rp = new ResultsProcessor();
+                            MMSearch mm = new MMSearch();
                             string artistName = rp.fixGuess(userInput.Trim());
 
+                            List<int> artists = mm.matchArtist(artistName);
+                            if (artists.Count != 0)
+                            {
+                                int artistID = mm.matchArtist(artistName)[0];
+                                Quiz.songs = DataParser.GetSongList(Quiz.fs.GetSongsByArtist(artistID, Quiz.pageNum));
+                                botOutput = ContextConstants.artistFound + artistName;
+                            }
+                            else
+                            {
+                                Quiz.songs = DataParser.GetSongList(Quiz.fs.getSongsData());
+                                botOutput = ContextConstants.noArtistFound;
+                            }
+
                             context.ConversationData.SetValue(ContextConstants.artist, false);
+                            context.ConversationData.RemoveValue(ContextConstants.question);
+                            context.ConversationData.RemoveValue(ContextConstants.hint);
+                            userMessage = true;
                         }
                         else
                         {
