@@ -7,20 +7,11 @@ namespace LyrickPick.Processors
 		private static string musixmatchAPIkey = @"8b7654870c8395335a30eb19039218f6";
 		private string songsData = string.Empty;
 
-		public string getSongsData()
-		{
-			return songsData;
-		}
-
-		public FetchSongs()
-		{
-			GetSongs();
-		}
-
-		public void GetSongs()
+		public string GetSongs()
 		{
 			string url = @"http://api.musixmatch.com/ws/1.1/chart.tracks.get?page=1&page_size=25&country=us&f_has_lyrics=1&apikey=" + musixmatchAPIkey;
 			songsData = FetchData.FetchDataFromURL(url);
+			return songsData;
 		}
 		public string GetSongs(int pageNum)
 		{

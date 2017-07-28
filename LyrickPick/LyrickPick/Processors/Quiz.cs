@@ -42,7 +42,7 @@ namespace LyrickPick.Processors
 			lp = new LyricProcessor();
 			fs = new FetchSongs();
 			//populate the songs list
-			songs = DataParser.GetSongList(fs.getSongsData());
+			songs = DataParser.GetSongList(fs.GetSongs());
 		}
 
 		public string Question()
