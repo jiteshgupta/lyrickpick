@@ -33,7 +33,7 @@ namespace LyrickPick
 
         private Activity HandleSystemMessage(Activity message)
         {
-            if (message.Type == ActivityTypes.DeleteConversationData)
+            if (message.Type == ActivityTypes.DeleteUserData)
             {
                 // Implement user deletion here
                 // If we handle user deletion, return a real message
