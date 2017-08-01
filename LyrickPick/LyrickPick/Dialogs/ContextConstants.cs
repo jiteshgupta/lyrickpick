@@ -14,7 +14,7 @@
 
         public static string welcomeMessage = "Welcome to the Lyric Pick Game! Guess the song title based on the lyric excerpt. If you're stuck, ask for an additional \"hint\". If you wanna skip, just \"pass\". Enter anything to start...";
 
-        public static string startMessage = "Welcome to the Lyric Pick Game! Guess the song title based on the lyric excerpt. If you're stuck, ask for an additional \"hint\". If you wanna skip, just \"pass\". Let's start...";
+        public static string startMessage = "Welcome to the Lyric Pick Game! Guess the song title based on the lyric excerpt. If you're stuck, ask for an additional \"hint\". If you wanna skip, just \"pass\". You can also get songs from a particular artist. Just \"change artist\"Let's start...";
 
         public static string artistMessage = "Cool! Enter the Artist Name...";
 
